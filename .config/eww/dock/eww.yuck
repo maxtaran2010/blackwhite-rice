@@ -1,0 +1,26 @@
+(defwindow dock
+           :monitor 0
+           :geometry (geometry :x "10px"
+                               :y "-5px"
+                               :width "70%"
+                               :height "70px"
+			       :anchor "bottom center")
+           :stacking "fg"
+	   :windowtype "dock"
+   	   :wm-ignore false
+       :reserve (struts :distance "80px" :side "bottom")
+(widgets))
+
+(defwidget widgets []
+	(box :orientation "h" :halign "right"
+		(box :halign "left" :orientation "h" :space-evenly false
+       	(workspaces)
+	)
+	(box :orientation "h" :halign "right" :space-evenly false :spacing 10
+     	(ram)
+		(time)
+		(htb)
+	)
+	
+)
+)

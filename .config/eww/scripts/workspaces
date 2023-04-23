@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo -n "(box :orientation 'h'"
+
+for var in $(wmctrl -d | awk '{print "^"$9}')
+	do
+		if [ "^$(($(wmctrl -d | grep '*' | cut -d ' ' -f1)+1))" == "$var" ]; then
+			echo -n "(button :onclick 'bspc desktop -f $var' '') "
+		else
+			echo -n "(button :onclick 'bspc desktop -f $var' '') "
+		fi
+
+	done
+
+	echo -n " )"

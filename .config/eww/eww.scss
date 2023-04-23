@@ -1,0 +1,30 @@
+.bar-left, .bar-right, .bar-center, .music {
+  border-radius: 10px;
+  background: #0c0c0c;
+  font-family: "JetBrains Mono Nerd Font";
+  font-size: 15px
+}
+button {
+  background: none;
+  border-radius: 15;
+}
+
+.music {
+	background: #0d0d0d;
+}
+
+ .art {
+    border-radius: 25px;
+	min-width: 50px;
+    min-height: 50px;
+    margin: 10px;
+  }
+
+box {
+   margin-left: 3px;
+   margin-right: 3px;
+}
+
+.red {
+  color: #43d06d;
+}

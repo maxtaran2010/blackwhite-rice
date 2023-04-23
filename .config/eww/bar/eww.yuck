@@ -1,0 +1,107 @@
+(defwindow bar-left
+           :monitor 0
+           :geometry (geometry :x "10px"
+                               :y "10px"
+                               :width "10%"
+                               :height "4%"
+			       :anchor "top left")
+           :stacking "fg"
+	   :windowtype "dock"
+   	   :wm-ignore false
+(workspaces))
+
+(defwidget workspaces []
+  (box :orientation "horizontal"
+       :halign: "center"
+  (button :onclick "bspc desktop -f ^1" "1")
+  (button :onclick "bspc desktop -f ^2" "2")
+  (button :onclick "bspc desktop -f ^3" "3")
+  (button :onclick "bspc desktop -f ^4" "4")
+  (button :onclick "bspc desktop -f ^5" "5")
+  (button :onclick "bspc desktop -f ^6" "6")
+  (box :class "red" "${cur-workspace}")
+
+  )
+)
+(defpoll cur-workspace :interval "1s"
+		       :initial "1"
+		       :run-while true
+`bspc query -D -d focused --names `)
+(defpoll htb-vpn :interval "1s"
+              :initial "00:00:00"
+              :run-while true
+
+  "[[ \"$(ifconfig | grep tun0)\" == \"\" ]] && echo 󰒘 off || echo 󰒘 on")
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(deflisten music_img :initial ""
+  "playerctl --follow metadata --format '{{ mpris:artUrl }}' || true")
+(defwindow bar-center
+           :monitor 0
+           :geometry (geometry :x "0px"
+                               :y "10px"
+                               :width "15%"
+                               :height "4%"
+			       :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "5%" :side "top")
+	   :windowtype "dock"
+   	   :wm-ignore false
+(music))
+
+(defpoll time :interval "1m"
+              :initial "00:00:00"
+              :run-while true
+`date +%H:%M`)
+
+; (deflisten ram "scripts/getram")
+
+(defpoll ram :interval "1s" :initial "" :run-while true `echo "(box :orientation 'vertical' '$(scripts/getram)')"`)
+
+
+
+(defwidget ram []
+(box :valign 'center' :orientation "vertical" :halign 'center'
+ (literal :content ram)
+))
+
+(defwindow bar-right
+           :monitor 0
+           :geometry (geometry :x "-10px"
+                               :y "10px"
+                               :width "10%"
+                               :height "4%"
+			       :anchor "top right")
+           :stacking "fg"
+	   :windowtype "dock"
+   	   :wm-ignore false
+(data))
+
+(defwidget music []
+  (box :orientation "horizontal"
+       :halign "center"
+  (button :onclick "eww open music" music)
+  )
+)
+
+(defwidget htb []
+  (box :orientation "horizontal"
+       :halign "center"
+  htb-vpn
+  )
+)
+
+
+(defwidget time []
+  (box :orientation "horizontal"
+       :halign "center"
+  " ${time}"
+  )
+)
+
+(defwidget data []
+  (box :orientation "horizontal"
+  (time)
+  (ram)
+ (htb))
+)

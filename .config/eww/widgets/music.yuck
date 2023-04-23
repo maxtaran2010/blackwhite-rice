@@ -1,0 +1,47 @@
+(defwindow music 
+	      :monitor 0
+		  :geometry (geometry    :x "0%"
+		  						 :y "6%"
+								 :width "20%"
+								 :height "10%"
+								 :anchor "top center")
+		  :stacking "fg"
+		  :reserve (struts :distance "0" :side "top")
+		  :windowtype "dock"
+		  :wm-ignore false
+		  
+(song))
+
+(deflisten songname "playerctl --follow metadata --format '{{ title }} - {{ artist }}' || true")
+(defpoll imagepath
+         :interval "10ms"
+		 :initial "awdawd"
+		 :run-while true
+ `echo "/home/max/.mozilla/firefox/firefox-mpris/$(ls /home/max/.mozilla/firefox/firefox-mpris)"`)
+ (defpoll paused :interval "10ms" :initial "1" :run-while true "scripts/getpaused")
+
+ (defwidget _image []
+  (image :path imagepath :image-width 50 :image-height 50 :class "art")	
+)
+
+ (defwidget songname []	
+	songname
+ )
+(defwidget song []
+(box :orientation "horizontal"
+		:halign "center"
+       (box :orientation "v" :space-evenly false
+	      (box :orientation "horizontal" :space-evenly false
+	      (_image)
+	      (songname)
+				)
+ 		     (box :orientation "h" :valign "center" :halign "center" :style "font-size: 25px;"
+		     (box :orinetation "h" :halign "center" :width 100
+	         (button :onclick "playerctl previous" "玲")
+	         (button :onclick "scripts/pause" "${paused}")
+	         (button :onclick "playerctl next" "怜")
+			 (button :onclick "eww close music" "x")
+			 )
+	))
+))
+

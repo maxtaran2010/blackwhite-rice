@@ -1,0 +1,4 @@
+x=$(xdotool getmouselocation | awk '{print $2}')
+if [[ {$x##*:} == "0" ]]; then
+	eww close-all
+fi
